@@ -44,7 +44,7 @@ const Product = ({ id, name, image, category, price }) => {
     }
 
     return (
-        <div className="w-[calc(33.33%-1rem)] ">
+        <div className="w-[calc(33.33%-1rem)] mb:w-full ">
             <div className="overflow-hidden">
                 <img loading="lazy" src={image} alt={name} className={`w-full h-full object-cover ${addToCart ? 'border-2 border-solid border-red' : ''}  hover:scale-150`} />
             </div>
