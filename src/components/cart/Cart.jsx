@@ -16,7 +16,7 @@ const Cart = () => {
         <div className="bg-white rounded-md p-6 w-[calc(30%-1rem)] h-max tb:w-full mb:w-full">
             <h2 className="text-2 text-red">Your Cart({cart.reduce((sum, item) => sum + parseInt(item.qty), 0)})</h2>
             <div className="flex flex-nowrap flex-col items-start justify-start">
-                {cart.map((item, index) => <CartItem key={index} name={item.name} qty={parseFloat(item.qty)} price={parseFloat(item.price)} total={parseFloat(item.total)} ></CartItem>)}
+                {cart.map((item, index) => <CartItem id={item.id} key={index} name={item.name} qty={parseFloat(item.qty)} price={parseFloat(item.price)} total={parseFloat(item.total)} ></CartItem>)}
             </div>
             <div className="flex flex-nowrap my-6 justify-between items-center ">
                 <span className="text-4">Order Total</span>
