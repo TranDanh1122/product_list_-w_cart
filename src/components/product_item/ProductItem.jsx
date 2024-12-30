@@ -4,10 +4,22 @@ import { AppContext } from "../../AppContext.jsx"
 const Product = ({ id, name, image, category, price }) => {
     let [addToCart, isAdd] = useState(false)
     let { cart, setCart } = useContext(AppContext)
-    let [qty, setQty] = useState(0)
+    let [qty, setQty] = useState(() => cart.find(item => item.id == id)?.qty ?? 0)
     let timeout;
     let updateCart = (newItem, isRemove = false) => {
-        isRemove ? setCart([...cart.filter(item => item.id !== id)]) : setCart([...cart.filter(item => item.id !== id), newItem])
+        if (isRemove) {
+            setCart([...cart.filter(item => item.id !== id)])
+            return true
+        }
+        let item = cart.findIndex(item => item.id == id)
+        if (item == -1) {
+            setCart([...cart.filter(item => item.id !== id), newItem])
+            return true
+        }
+        setCart(cart.map(item => {
+            if (item.id === id) return newItem
+            return item
+        }))
     }
     let triggerAddCart = () => {
         clearTimeout(timeout)
@@ -35,7 +47,7 @@ const Product = ({ id, name, image, category, price }) => {
         if (isDesc) {
             newQty = qty > 0 ? qty - 1 : 0
         } else {
-            newQty =  qty + 1
+            newQty = qty + 1
         }
         setQty(newQty)
         if (newQty == 0) triggerAddCart()
