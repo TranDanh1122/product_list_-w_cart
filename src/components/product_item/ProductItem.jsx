@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import PropTypes from "prop-types"
 import { AppContext } from "../../AppContext.jsx"
-const Product = ({ id, name, image, category, price }) => {
+const Product = ({ id, name, image, category, price, thumbnail }) => {
     let [addToCart, isAdd] = useState(false)
     let { cart, setCart } = useContext(AppContext)
     let [qty, setQty] = useState(() => cart.find(item => item.id == id)?.qty ?? 0)
@@ -40,7 +40,7 @@ const Product = ({ id, name, image, category, price }) => {
         let item = cart.find(item => item.id == id)
         let total = value
         if (item) total += parseInt(item.qty)
-        updateCart({ name: name, id: id, price: price, qty: total, total: price * total }, value == 0)
+        updateCart({ name: name, id: id, price: price, qty: total, total: price * total, thumbnail: thumbnail }, value == 0)
     }
     let handleIncDesc = (isDesc = false) => {
         let newQty = 0
@@ -52,7 +52,7 @@ const Product = ({ id, name, image, category, price }) => {
         setQty(newQty)
         if (newQty == 0) triggerAddCart()
 
-        updateCart({ name: name, id: id, price: price, qty: newQty, total: price * newQty }, newQty == 0)
+        updateCart({ name: name, id: id, price: price, qty: newQty, total: price * newQty, thumbnail: thumbnail }, newQty == 0)
     }
 
     return (
@@ -88,6 +88,7 @@ Product.propTypes = {
     name: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired
+    price: PropTypes.number.isRequired,
+    thumbnail: PropTypes.string.isRequired
 }
 export default Product

@@ -9,7 +9,7 @@ const AppProvider = ({ children }) => {
         let cart = localStorage.getItem('cart')
         return cart ? JSON.parse(cart) : [];
     });
-    const [checkOut, isCheckOut] = useState();
+    const [checkOut, isCheckOut] = useState(false);
     let setCart = (cart) => {
         localStorage.setItem('cart', JSON.stringify(cart))
         updateCart(cart)

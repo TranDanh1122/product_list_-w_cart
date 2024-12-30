@@ -16,7 +16,7 @@ const ProductList = () => {
         <div className="w-[calc(70%-1rem)] tb:w-full mb:w-full">
             <h2 className="text-1 mb-8">Desserts</h2>
             <div className="w-full flex flex-wrap items-baseline justify-between gap-6 gap-y-8">
-                {productList.map((product, index) => <Product key={index} id={index} image={getImage(product.image)} category={product.category} price={product.price} name={product.name}></Product>)}
+                {productList.map((product, index) => <Product key={index} id={index} image={getImage(product.image)} category={product.category} price={product.price} thumbnail={product.image?.thumbnail ?? ''} name={product.name}></Product>)}
             </div>
         </div>
     )
