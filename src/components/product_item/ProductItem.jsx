@@ -15,10 +15,12 @@ const Product = ({ id, name, image, category, price }) => {
     }
     let handleChangeQty = (e) => {
         let value = parseInt(e.target.value)
+        console.log(value);
+
         if (!value || isNaN(value) || value < 0) {
             setQty(0)
             triggerAddCart()
-            updateCart({ name: name, id: id, price: price, qty: total, total: price * total }, qty == 0)
+            updateCart({}, true)
             return false
         }
         setQty(value)
@@ -26,23 +28,26 @@ const Product = ({ id, name, image, category, price }) => {
         let item = cart.find(item => item.id == id)
         let total = value
         if (item) total += parseInt(item.qty)
-        updateCart({ name: name, id: id, price: price, qty: total, total: price * total }, qty == 0)
+        updateCart({ name: name, id: id, price: price, qty: total, total: price * total }, value == 0)
     }
     let handleIncDesc = (isDesc = false) => {
+        let newQty = 0
         if (isDesc) {
-            qty = qty > 0 ? qty - 1 : 0
+            newQty = qty > 0 ? qty - 1 : 0
         } else {
-            qty += 1
+            newQty =  qty + 1
         }
-        setQty(qty)
-        if (qty == 0) triggerAddCart()
+        setQty(newQty)
+        if (newQty == 0) triggerAddCart()
 
-        updateCart({ name: name, id: id, price: price, qty: qty, total: price * qty }, qty == 0)
+        updateCart({ name: name, id: id, price: price, qty: newQty, total: price * newQty }, newQty == 0)
     }
 
     return (
         <div className="w-[calc(33.33%-1rem)] ">
-            <img loading="lazy" src={image} alt={name} className={`w-full h-full object-cover ${addToCart ? 'border-2 border-solid border-red' : ''}`} />
+            <div className="overflow-hidden">
+                <img loading="lazy" src={image} alt={name} className={`w-full h-full object-cover ${addToCart ? 'border-2 border-solid border-red' : ''}  hover:scale-150`} />
+            </div>
             {(addToCart)
                 ?
                 <div className="relative translate-y-[-50%] w-1/2 mx-auto">
