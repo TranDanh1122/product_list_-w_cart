@@ -5,8 +5,18 @@ export const AppContext = createContext();
 
 // Create a provider component
 const AppProvider = ({ children }) => {
-    const [cart, setCart] = useState([]);
+    const [stateCart, updateCart] = useState([]);
     const [checkOut, isCheckOut] = useState();
+    let setCart = (cart) => {
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCart(cart)
+    }
+    let getCart = () => {
+        const cart = localStorage.getItem('cart');
+        return cart ? JSON.parse(cart) : [];
+    }
+    let cart = getCart()
+    
     return (
         <AppContext.Provider value={{ cart, setCart, checkOut, isCheckOut }}>
             {children}
